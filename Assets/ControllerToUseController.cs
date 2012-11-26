@@ -16,8 +16,8 @@ public class ControllerToUseController : MonoBehaviour {
 	public float slowRate = 0.15f;
 	private float isMov=1;
 	
-	public float health = 100;
-	public float energy = 100;
+	public float health = 124;
+	public float energy = 124;
 	public bool movementEnabled = false;
 	
 	void Start() {
@@ -77,10 +77,10 @@ public class ControllerToUseController : MonoBehaviour {
 		
 		if(health <= 0){
 			transform.position = spawnPosition;
-			health = 100;
-			energy = 100;
+			health = 124;
+			energy = 124;
 			}
-		if(energy <= 100 && !Input.GetMouseButton(0)){
+		if(energy <= 124 && !Input.GetMouseButton(0)){
 			energy += 0.25f;
 		}
 		
