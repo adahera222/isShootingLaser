@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: 354b61e68092a4788a4965a7583fe3f1
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - energyFull: {fileID: 2800000, guid: 327b11592d9434156b956d055c543c41, type: 1}
+  - energyEmpty: {fileID: 2800000, guid: 327b11592d9434156b956d055c543c41, type: 1}
+  - healthFull: {fileID: 2800000, guid: 327b11592d9434156b956d055c543c41, type: 1}
+  - healthEmpty: {fileID: 2800000, guid: 327b11592d9434156b956d055c543c41, type: 1}
+  - player: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
