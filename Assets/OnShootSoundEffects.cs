@@ -17,7 +17,7 @@ public class OnShootSoundEffects : MonoBehaviour {
 			}
 		}
 		else{
-			audio.Pause();
+			audio.Stop();
 		}
 	}
 }
