@@ -34,13 +34,14 @@ public class LaserShootRecursiveBetter : MonoBehaviour {
 	}
 	
 	void Update () {
-		
+
+		foreach( GameObject i in refLaserCyl){
+			Destroy(i);
+		}
+		refLaserCyl.Clear();
+
 		if (GetComponent<ControllerToUseController>().movementEnabled) {
 		
-			foreach( GameObject i in refLaserCyl){
-				Destroy(i);
-			}
-			refLaserCyl.Clear();
 			if(Input.GetMouseButton(0)&& transform.GetComponent<ControllerToUseController>().energy >= 0){
 			
 				
@@ -50,12 +51,15 @@ public class LaserShootRecursiveBetter : MonoBehaviour {
 				Vector3 laserDir = mousePos - transform.position;
 				laserDir.y=0;
 				laserDir=laserDir.normalized;
-				ReflectLaser(laserRange,laserDir,transform.position+laserDir*SphereRadius,transform.up,1);
+				NetworkViewID viewID = Network.AllocateViewID();
+				networkView.RPC("ReflectLaser", RPCMode.AllBuffered, viewID, laserRange,laserDir,transform.position+laserDir*SphereRadius,transform.up,1.0f);
 			}	
 		}
 	}
 	
-	void ReflectLaser(float len, Vector3 refDir,Vector3 originPos,Vector3 Up,float NumRec){
+	[RPC]
+	void ReflectLaser(NetworkViewID viewID, float len, Vector3 refDir,Vector3 originPos,Vector3 Up,float NumRec){
+		
 		if(refNum<NumRec){return;}
 		
 		RaycastHit laserHit;
@@ -71,7 +75,7 @@ public class LaserShootRecursiveBetter : MonoBehaviour {
 				refletLaser=refletLaser.normalized;
 				lengthofRefLaser =len-(originPos-laserHit.point).magnitude;
 				
-				ReflectLaser(lengthofRefLaser,refletLaser,laserHit.point,Up,NumRec+1);
+				ReflectLaser(viewID, lengthofRefLaser,refletLaser,laserHit.point,Up,NumRec+1);
 				
 				GameObject glowEffect = new GameObject();
 				Light glowLight = glowEffect.AddComponent<Light>();
