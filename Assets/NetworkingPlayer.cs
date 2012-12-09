@@ -9,7 +9,7 @@ public class NetworkingPlayer : MonoBehaviour {
 	public GUIText networkStatusText;
 	public GUITexture networkStatusView;
 	private string serverName = "MadBubbleSmashGameWINNER"; 
-	private int maxPlayers = 2; 
+	private int maxPlayers = 1; 
 	private int port = 25567;
 	private Rect windowRect = new Rect(100, 0, 400, 400);
 	private bool isGameAvailable = false;
