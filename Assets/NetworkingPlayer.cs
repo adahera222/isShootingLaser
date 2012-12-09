@@ -15,7 +15,7 @@ public class NetworkingPlayer : MonoBehaviour {
 	private bool isGameAvailable = false;
 	private bool gameActive = false;
 	private bool playerInstantiated = false;
-		
+	
 	void Start () {
 		MasterServer.RequestHostList(serverName);						
 	}

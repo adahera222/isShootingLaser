@@ -66,7 +66,7 @@ public class ControllerToUseController : MonoBehaviour {
 		
 		// This is our own player
 		movementEnabled = networkView.isMine;
-				
+			
 		if (movementEnabled) {
 			Camera.mainCamera.GetComponent<CamFollowPlayer>().target = this.transform;
 		}

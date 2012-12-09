@@ -6,24 +6,20 @@ using System.Collections.Generic;
 public class LaserShootRecursiveBetter : MonoBehaviour {
 	
 	public Camera camera;
-	
-	public float laserRange=20f;
-	
 	public Color laserColor;
-	public int refNum=3;
+	public int refNum = 3;
 	
+	public float lightDist = 0.5f;
+	public float laserRange = 20f;
 	public float laserIntenseity = 4f;
-	
-	private float widthLaser=0.15f;
-	
-	public float lightDist=0.5f;
-	
 	public Shader laserShader; 
-	
 	public GameObject sparks;
+	public bool useRPC = true;
 	
+	private float widthLaser = 0.15f;
 	private List<GameObject> refLaserCyl= new List<GameObject>();
 	private float SphereRadius=0.5f;
+	
     void Start(){
 	//	laserShader = Shader.Find("Self-Illuminated Specular");
 		
@@ -52,7 +48,12 @@ public class LaserShootRecursiveBetter : MonoBehaviour {
 				laserDir.y=0;
 				laserDir=laserDir.normalized;
 				NetworkViewID viewID = Network.AllocateViewID();
-				networkView.RPC("ReflectLaser", RPCMode.AllBuffered, viewID, laserRange,laserDir,transform.position+laserDir*SphereRadius,transform.up,1.0f);
+				
+				if (useRPC) {
+					networkView.RPC("ReflectLaser", RPCMode.AllBuffered, viewID, laserRange,laserDir,transform.position+laserDir*SphereRadius,transform.up,1.0f);
+				} else {
+					ReflectLaser(viewID, laserRange,laserDir,transform.position+laserDir*SphereRadius,transform.up,1.0f);
+				}
 			}	
 		}
 	}
