@@ -131,12 +131,23 @@ public class ControllerToUseController : MonoBehaviour {
 			health -= 0.5f;
 		}
 	}
+	
 	void Damage(){
 		health -= 0.5f;
+		
+		if (!networkView.isMine) {
+			NetworkViewID viewID = Network.AllocateViewID();
+			networkView.RPC("updateOpponentHealth", RPCMode.OthersBuffered, health);	
+		}
 	}
 	
 	[RPC]
 	void recieveRematchRequest(NetworkViewID viewID) {
 		playerAcceptedRematch = true;	
+	}
+	
+	[RPC]
+	void updateOpponentHealth(NetworkViewID viewID, float newHealth) {
+		health = newHealth;
 	}
 }
