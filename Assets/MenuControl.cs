@@ -12,7 +12,7 @@ public class MenuControl : MonoBehaviour {
 	}
 	
 	void OnGUI() {		
-		if (GUI.Button(new Rect(Screen.width/2, Screen.height/2, 220, 100), "Start Game")) {
+		if (GUI.Button(new Rect(Screen.width*0.65f, Screen.height*0.55f, 150, 80), "Start Game")) {
 			Application.LoadLevel(1);
 		}   
 	}

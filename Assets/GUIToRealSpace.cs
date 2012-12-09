@@ -14,7 +14,8 @@ public class GUIToRealSpace : MonoBehaviour {
 	private TutorialPhase phase = TutorialPhase.TutPhaseMove;
 	
 	void Start () {
-		Vector3 dest = gameObject.transform.parent.gameObject.transform.position;
+		// @todo: Danger hax!
+		Vector3 dest = gameObject.transform.parent.gameObject.transform.parent.gameObject.transform.position;
 		initialPosition = Camera.main.WorldToViewportPoint(dest);
 	}
 	
@@ -23,7 +24,7 @@ public class GUIToRealSpace : MonoBehaviour {
 		transform.position = Camera.main.WorldToViewportPoint(dest);
 		
 		if (phase == TutorialPhase.TutPhaseMove) {
-			if (Vector3.Distance(initialPosition, transform.position) > 0.2) {
+			if (Vector3.Distance(initialPosition, transform.position) > 2.1445) {
 				guiTexture.texture = aimTutorial;
 				phase++;
 			}
