@@ -25,6 +25,9 @@ public class ControllerToUseController : MonoBehaviour {
 	void OnGUI () {
 		
 		if (health <= 0) { // The player has died.
+			
+			movementEnabled = false;
+			
 			if (networkView.isMine) {
 				GUI.Label(new Rect(Screen.width/2, Screen.height/2-20, 200, 200), "You lose");
 			} else {
@@ -137,7 +140,7 @@ public class ControllerToUseController : MonoBehaviour {
 		
 		if (!networkView.isMine) {
 			NetworkViewID viewID = Network.AllocateViewID();
-			networkView.RPC("updateOpponentHealth", RPCMode.OthersBuffered, health);	
+			networkView.RPC("updateOpponentHealth", RPCMode.OthersBuffered, viewID, health);	
 		}
 	}
 	
