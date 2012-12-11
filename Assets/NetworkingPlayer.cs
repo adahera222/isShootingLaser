@@ -15,12 +15,17 @@ public class NetworkingPlayer : MonoBehaviour {
 	private bool isGameAvailable = false;
 	private bool gameActive = false;
 	private bool playerInstantiated = false;
+	private bool playerDisconnected = false;
 	
 	void Start () {
 		MasterServer.RequestHostList(serverName);						
 	}
 	
 	void OnGUI () {
+		
+		if (playerDisconnected){
+			GUI.Label(new Rect(Screen.width/2-110, Screen.height/2, 220, 100), "Opponent Disconnected, waiting for another player to connect ...");
+		}
 		
 		if (!gameActive) {
 			if (GUI.Button(new Rect(Screen.width/2-110, Screen.height/2, 220, 100), "Debug Start")) {
@@ -34,7 +39,7 @@ public class NetworkingPlayer : MonoBehaviour {
 	}
 	
 	void Update () {
-	
+		
 	}
 	
 	void OnServerInitialized() {
@@ -45,6 +50,14 @@ public class NetworkingPlayer : MonoBehaviour {
 		Debug.Log("Connected to server");		
 		NetworkViewID viewID = Network.AllocateViewID();
         networkView.RPC("SpawnPlayer", RPCMode.AllBuffered, viewID, transform.position);
+	}
+	
+	void OnPlayerDisconnected(NetworkPlayer p) {
+		playerDisconnected = true;
+		Network.RemoveRPCs(p);
+		Network.DestroyPlayerObjects(p);
+		Debug.Log("health = " + player.GetComponent<ControllerToUseController>().health);
+		player.GetComponent<ControllerToUseController>().health = 124;
 	}
 
 	void OnMasterServerEvent(MasterServerEvent msEvent) {
@@ -125,6 +138,7 @@ public class NetworkingPlayer : MonoBehaviour {
 		if (!playerInstantiated) {
 			Network.Instantiate(player, player.transform.position, Quaternion.identity, 0);
 		}
+		playerDisconnected=false;
 		playerInstantiated = true;
 		gameActive = true;
 	}
